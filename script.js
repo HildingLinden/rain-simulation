@@ -382,7 +382,7 @@ function loop(timestamp) {
   const dt = (timestamp - lastTs) / 1000;
   lastTs = timestamp;
 
-  console.log( dt );
+  //console.log()
 
   totalTime     += dt;
   totalDistance += rect.speed * dt;

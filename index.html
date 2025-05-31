@@ -2,15 +2,108 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rain Simulation</title>
     <style>
-        body { margin: 0; overflow: hidden; }
-        canvas { display: block; background: #000; }
+/* Base styles */
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+canvas {
+  display: block;
+  background: #000;
+}
+
+/* Default stats/control styling */
+#stats {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  color: white;
+  font-size: 16px;       /* 16px on desktop by default */
+}
+
+#controls {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  color: white;
+  font-size: 14px;       /* 14px on desktop by default */
+  background: rgba(0, 0, 0, 0.5);
+  padding: 8px;
+  border-radius: 4px;
+}
+
+/* Make sliders (and text) larger on narrow screens */
+@media (max-width: 768px) {
+      /* Stats on left half, controls on right half, auto‐height, no overlap */
+      #stats {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 50%;             /* stretch from left edge up to 50% of viewport */
+        box-sizing: border-box; /* so padding is included */
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 14px;        /* slightly smaller than 18px */
+        line-height: 1.3;
+      }
+
+      #controls {
+        position: absolute;
+        top: 0;
+        left: 50%;              /* start at exactly 50% of viewport */
+        right: 0;               /* stretch to right edge */
+        box-sizing: border-box;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.7);
+        font-size: 14px;
+        line-height: 1.3;
+      }
+
+      /* Make sliders a bit more compact for mobile */
+      #controls input[type="range"] {
+        width: 90%;    /* fill most of the half-width, leaving a little margin */
+        height: 24px;  /* a bit shorter than 32px */
+        margin-top: 4px;
+      }
+
+      /* Stack labels vertically, with smaller bottom margin */
+      #controls label {
+        display: block;
+        margin-bottom: 0.6em;
+      }
+
+      /* Slightly smaller slider thumbs, centered on a 24px track */
+      input[type="range"] {
+        -webkit-appearance: none;
+        appearance: none;
+        background: transparent;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-top: -3px; /* to center on 24px track */
+      }
+      input[type="range"]::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    }
     </style>
 </head>
 <body>
 <canvas id="canvas2"></canvas>
-<div id="stats" style="position:fixed; top:10px; left:10px; color:white; font:16px sans-serif;">
+<div id="stats" style="position:fixed; top:10px; left:10px; color:white;">
   <div>Hits / second: <span id="hitsPerSecond">0</span></div>
   <div>Hits / meter: <span id="hitsPerMeter">0</span></div>
   <div>Left %: <span id="leftPercent">0</span>%</div>
@@ -20,7 +113,7 @@
 </div>
 <div id="controls"
      style="position:fixed; top:10px; right:10px; color:white;
-            font:14px sans-serif; background:rgba(0,0,0,0.5);
+            background:rgba(0,0,0,0.5);
             padding:8px; border-radius:4px;">
   <div>
     <label>
