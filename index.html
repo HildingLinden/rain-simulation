@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Rain Simulation</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        canvas { display: block; background: #000; }
+    </style>
+</head>
+<body>
+<canvas id="canvas2"></canvas>
+<div id="stats" style="position:fixed; top:10px; left:10px; color:white; font:16px sans-serif;">
+  <div>Hits / second: <span id="hitsPerSecond">0</span></div>
+  <div>Hits / meter: <span id="hitsPerMeter">0</span></div>
+  <div>Left %: <span id="leftPercent">0</span>%</div>
+  <div>Top %:  <span id="topPercent">0</span>%</div>
+  <div>Right %: <span id="rightPercent">0</span>%</div>
+  <div>Avg Frametime: <span id="avgFrametime">0</span> ms</div>
+</div>
+<div id="controls"
+     style="position:fixed; top:10px; right:10px; color:white;
+            font:14px sans-serif; background:rgba(0,0,0,0.5);
+            padding:8px; border-radius:4px;">
+  <div>
+    <label>
+      Rain speed:
+      <input id="rainSpeedSlider" type="range"
+             min="5"   max="20" step="0.5" value="10">
+      <span id="rainSpeedValue">10</span> m/s
+    </label>
+  </div>
+  <div>
+    <label>
+      Rect speed:
+      <input id="rectSpeedSlider" type="range"
+             min="1"   max="5"  step="0.1" value="1">
+      <span id="rectSpeedValue">1</span> m/s
+    </label>
+  </div>
+  <div>
+    <label>
+      Rect angle:
+      <input id="rectAngleSlider" type="range"
+             min="-90"  max="90" step="1" value="0">
+      <span id="rectAngleValue">0</span>°
+    </label>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
